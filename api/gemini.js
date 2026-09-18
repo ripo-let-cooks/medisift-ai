@@ -282,9 +282,10 @@ export default async function handler(req, res) {
             `Anda adalah dokter yang ramah. Pasien awam memiliki keluhan berikut: "${symptoms || ''}". Berikan MAKSIMAL 4 rekomendasi obat yang umum, aman, dan relevan. ATURAN PENTING: 1. Gunakan bahasa awam sehari-hari. 2. JANGAN PERNAH menyalin teks mentah dari sumber mana pun (hindari plagiasi/recitation filter), gunakan kata-kata Anda sendiri. Kembalikan HANYA JSON valid sesuai skema tanpa markdown backticks atau log tambahan.`
           ];
         } else if (action === 'POLYPHARMACY') {
-          const { drugListString } = payload || {};
+          const { drugListString, drugList } = payload || {};
+          const listText = drugListString || (Array.isArray(drugList) ? drugList.join(', ') : '');
           promptContent = [
-            `Anda adalah pakar farmakologi. Pengguna memasukkan daftar obat berikut: "${drugListString || ''}". Buat matriks interaksi silang (setiap kombinasi pasangan). Tentukan tingkat keparahan interaksinya. ATURAN PENTING: 1. Gunakan bahasa awam sehari-hari. 2. Jika tidak ada interaksi negatif, beri severity "Safe" dan tulis "Aman digunakan bersamaan". 3. JANGAN PERNAH menyalin teks mentah dari referensi mana pun (hindari RECITATION), formulasikan dengan gaya bahasa Anda sendiri. Kembalikan HANYA JSON valid sesuai skema.`
+            `Anda adalah pakar farmakologi. Pengguna memasukkan daftar obat berikut: "${listText}". Buat matriks interaksi silang (setiap kombinasi pasangan). Tentukan tingkat keparahan interaksinya. ATURAN PENTING: 1. Gunakan bahasa awam sehari-hari. 2. Jika tidak ada interaksi negatif, beri severity "Safe" dan tulis "Aman digunakan bersamaan". 3. JANGAN PERNAH menyalin teks mentah dari referensi mana pun (hindari RECITATION), formulasikan dengan gaya bahasa Anda sendiri. Kembalikan HANYA JSON valid sesuai skema.`
           ];
         }
 
