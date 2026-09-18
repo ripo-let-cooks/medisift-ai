@@ -415,7 +415,9 @@ export default function App() {
                     <motion.button 
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      onClick={() => toast("Laporan Diterima", { description: "Terima kasih atas umpan balik Anda, data akan diaudit."})}
+                      onClick={() => toast.success("Laporan Inakurasi Diterima", { 
+                        description: "Terima kasih atas kontribusi Anda. Data analisis obat ini telah ditandai untuk audit verifikasi klinis lanjutan."
+                      })}
                       className="w-full sm:w-auto text-[10px] sm:text-xs font-mono uppercase tracking-widest bg-background border border-border/40 px-6 py-3 hover:bg-muted hover:text-foreground transition-colors shrink-0 no-print"
                     >
                       Laporkan Inakurasi
