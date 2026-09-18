@@ -67,32 +67,42 @@
 Jika juri bertanya: *"Tema lomba kita adalah KLASIFIKASI, di mana letak klasifikasi pada aplikasi ini?"*
 
 Ini jawaban telak dan sangat memukau:  
-MediSift AI bukan cuma melakukan 1 klasifikasi sederhana, melainkan **Sistem Klasifikasi Medis Bertingkat 5 Dimensi (Multi-Level Classification)**:
+MediSift AI bukan cuma melakukan 1 klasifikasi sederhana, melainkan **Sistem Klasifikasi Klinis Multidimensi 8 Lapis (Multi-Level Clinical Classification)**:
 
-1. **Klasifikasi Golongan Legalitas BPOM:**
+1. **Klasifikasi Golongan Legalitas BPOM (Multi-class Regulatory Classification):**
    * Mengklasifikasikan obat ke dalam 4 kategori regulasi resmi:
      * 🟢 **Obat Bebas** (Bisa dibeli bebas tanpa resep di warung/apotek).
      * 🔵 **Obat Bebas Terbatas** (Bisa dibeli bebas namun ada tanda peringatan khusus P No. 1 s.d. P No. 6).
      * 🔴 **Obat Keras / Wajib Resep** (Lingkaran merah huruf K, wajib dengan resep dokter).
      * 🟡 **Suplemen / Jamu Herbal** (Vitamin atau obat bahan alam).
-2. **Klasifikasi Tingkat Risiko Klinis (Risk Level):**
-   * Mengklasifikasikan tingkat keparahan risiko kesehatan ke dalam 4 tingkat visual:
-     * **Rendah (Low - Hijau/Teal):** Efek samping minimal untuk orang dewasa sehat.
+2. **Klasifikasi Tingkat Risiko Klinis (Ordinal Risk Classification + Confidence Score):**
+   * Mengklasifikasikan tingkat keparahan risiko kesehatan ke dalam 4 tingkat visual yang terkalibrasi:
+     * **Rendah (Low - Teal):** Efek samping minimal untuk orang dewasa sehat.
      * **Sedang (Moderate - Kuning):** Ada efek samping seperti kantuk atau perih lambung.
      * **Tinggi (High - Oranye):** Punya risiko ke organ hati/ginjal atau kontraindikasi penyakit kronis.
      * **Bahaya (Critical - Merah):** Sangat berbahaya jika diminum sembarangan tanpa resep.
-3. **Klasifikasi Keamanan Ibu Hamil (FDA Pregnancy Risk):**
-   * Mengklasifikasikan zat aktif ke kategori risiko janin: **Kategori A, B, C, D, hingga X (Dilarang Keras untuk ibu hamil)**.
-4. **Klasifikasi Benturan Campur Obat (Polypharmacy Clash Severity):**
-   * Saat pasien minum banyak obat, sistem mengklasifikasikan pasangan obat menjadi:
+   * Dilengkapi skor akurasi/keyakinan model (*Confidence Score*, misal: **98%**).
+3. **Klasifikasi Spektrum Dosis Toleransi (Safety Dosage Threshold Band):**
+   * Mengklasifikasikan volume dosis obat ke dalam zona toleransi tubuh:
+     * 🟢 **Dosis Aman / Sekali Minum** (Teal): Rentang terapi yang efektif dan aman.
+     * 🟠 **Batas Maksimal Harian** (Oranye): Plafon konsumsi maksimal 24 jam.
+     * 🔴 **Ambang Bahaya / Keracunan** (Merah Crimson): Titik overdosis yang memicu toksisitas organ.
+4. **Klasifikasi Keamanan Ibu Hamil (FDA Pregnancy Risk Category):**
+   * Mengklasifikasikan zat aktif ke kategori risiko janin standar FDA: **Kategori A, B, C, D, hingga X (Dilarang Keras untuk ibu hamil)**.
+5. **Klasifikasi Benturan Campur Obat (Polypharmacy Clash Severity):**
+   * Saat pasien minum banyak obat, sistem mengklasifikasikan pasangan interaksi silang menjadi:
      * `[SAFE]`: Aman diminum bersamaan.
      * `[MEDIUM]`: Perlu jeda waktu minum 2–3 jam.
      * `[CRITICAL CLASH]`: Benturan bahaya yang bisa melukai lambung atau merusak organ.
-5. **Klasifikasi Maksud Input Pengguna (Intent Router):**
-   * Memilah input pengguna di browser secara lokal (0 kuota): apakah input adalah **Nama Obat** (`IDENTIFY`) atau **Keluhan Sakit/Gejala** (`SUGGEST`).
+6. **Klasifikasi Peringatan Aktivitas Harian (Multi-label Behavioral Warning):**
+   * Mengklasifikasikan batasan aktivitas pasien saat di bawah pengaruh obat: misal `[!] Menyebabkan Kantuk`, `[!] Dilarang Mengemudi / Menjalankan Mesin`, `[!] Hindari Alkohol`.
+7. **Klasifikasi Maksud Input Pengguna (Zero-Cost Intent Router):**
+   * Memilah input pengguna di browser secara lokal (0 kuota): apakah input adalah **Nama Obat** (`IDENTIFY`), **Keluhan Sakit/Gejala** (`SUGGEST`), atau **Campuran Obat** (`POLYPHARMACY`).
+8. **Klasifikasi Verifikasi & Koreksi Mandiri Klinis (AI Self-Correction / CoVe):**
+   * Pengecekan ulang akurasi klasifikasi dengan mencocokkan data pada standar farmakope ketat via tombol *Verifikasi Ulang*.
 
 > 💡 **Kalimat Emas untuk Juri:**  
-> *"Bapak/Ibu Dewan Juri, proyek kami adalah implementasi nyata dari tema **Klasifikasi**. MediSift AI mengklasifikasikan data farmakologi secara komprehensif dalam 5 tingkatan: legalitas BPOM, tingkat risiko klinis, batas keamanan kehamilan, tingkat benturan antar-obat, hingga klasifikasi maksud keluhan pengguna."*
+> *"Bapak/Ibu Dewan Juri, jika peserta lain hanya membuat 1 fungsi klasifikasi teks atau gambar biasa, MediSift AI menghadirkan **Sistem Klasifikasi Medis Multidimensi 8 Lapis**: mulai dari klasifikasi legalitas BPOM, tingkat risiko klinis, ambang toleransi dosis toksik, keamanan kehamilan FDA, benturan polifarmasi, peringatan aktivitas, hingga klasifikasi maksud kueri pengguna secara cerdas dan transparan (Explainable AI)."*
 
 ---
 

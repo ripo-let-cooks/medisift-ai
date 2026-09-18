@@ -51,12 +51,15 @@ MediSift AI **bukan sekadar chatbot**, melainkan mesin diagnostik edukatif yang:
 * Menguji benturan kimiawi konsumsi multi-obat secara instan (*Polypharmacy Clash Matrix*).
 
 ### B. Kesesuaian Tema Lomba: "Klasifikasi"
-Platform ini merupakan implementasi tingkat lanjut dari tema **Klasifikasi Medis**, menghadirkan arsitektur **Multi-Level Clinical Classification (Sistem Klasifikasi 5 Dimensi)**:
+Platform ini merupakan implementasi tingkat lanjut dari tema **Klasifikasi Medis**, menghadirkan arsitektur **Multi-Level Clinical Classification (Sistem Klasifikasi Klinis 8 Dimensi)**:
 1. **Klasifikasi Legalitas BPOM (*Regulatory Classification*):** Mengklasifikasikan obat ke dalam 4 kelas hukum: *Obat Bebas (Hijau)*, *Obat Bebas Terbatas (Biru)*, *Obat Keras / Wajib Resep (Merah)*, dan *Suplemen / Herbal (Kuning)*.
-2. **Klasifikasi Risiko Klinis (*Clinical Risk Classification*):** Mengklasifikasikan tingkat keparahan risiko kesehatan ke dalam 4 zona: *Rendah (Teal)*, *Sedang (Kuning)*, *Tinggi (Oranye)*, dan *Kritis (Crimson)*.
-3. **Klasifikasi Keamanan Kehamilan (*FDA Pregnancy Category*):** Mengklasifikasikan dampak zat aktif terhadap janin (*Kategori A, B, C, D, X*).
-4. **Klasifikasi Benturan Polifarmasi (*Clash Severity Classification*):** Mengklasifikasikan interaksi pasangan multi-obat (*[SAFE]*, *[MEDIUM]*, *[CRITICAL CLASH]*).
-5. **Klasifikasi Maksud Pengguna (*Zero-Cost Intent Classification*):** Memilah input teks lokal di browser antara nama obat tunggal (`IDENTIFY`) atau keluhan gejala (`SUGGEST`).
+2. **Klasifikasi Risiko Klinis (*Clinical Risk Classification*):** Mengklasifikasikan tingkat keparahan risiko kesehatan ke dalam 4 zona: *Rendah (Teal)*, *Sedang (Kuning)*, *Tinggi (Oranye)*, dan *Kritis (Crimson)*, dilengkapi probabilitas *confidence score* (misal: 98%).
+3. **Klasifikasi Spektrum Dosis Toleransi (*Safety Threshold Band Classification*):** Memetakan rentang dosis kuantitatif ke dalam zona keamanan tubuh: *Dosis Aman* $\rightarrow$ *Batas Maksimal* $\rightarrow$ *Ambang Keracunan/Toksisitas*.
+4. **Klasifikasi Keamanan Kehamilan (*FDA Pregnancy Category*):** Mengklasifikasikan dampak zat aktif terhadap janin (*Kategori A, B, C, D, X*).
+5. **Klasifikasi Benturan Polifarmasi (*Clash Severity Classification*):** Mengklasifikasikan interaksi pasangan multi-obat (*[SAFE]*, *[MEDIUM]*, *[CRITICAL CLASH]*).
+6. **Klasifikasi Peringatan Perilaku (*Multi-label Behavioral Safety*):** Mengklasifikasikan batasan aktivitas harian (misal: *Menyebabkan Kantuk*, *Dilarang Mengemudi*, *Hindari Alkohol*).
+7. **Klasifikasi Maksud Pengguna (*Zero-Cost Intent Classification*):** Memilah input teks lokal di browser antara nama obat tunggal (`IDENTIFY`), keluhan gejala (`SUGGEST`), atau komposit polifarmasi (`POLYPHARMACY`).
+8. **Klasifikasi Verifikasi Mandiri (*Faithfulness & Clinical Re-Audit*):** Validasi ulang klasifikasi dengan batas presisi farmakope (*AI Self-Correction*).
 
 Selain itu, sistem selaras dengan pilar pendukung:
 * **AI Governance & Ethical AI:** Menjunjung transparansi logika (*anti-black-box*) dan audit klinis mandiri (*AI Self-Correction*).
