@@ -22,7 +22,7 @@
 
 ## DAFTAR ISI
 1. [Latar Belakang: Masalah Nyata di Sekitar Kita](#1-latar-belakang-masalah-nyata-di-sekitar-kita)
-2. [Solusi dan Kesesuaian Tema](#2-solusi-dan-kesesuaian-tema)
+2. [Solusi: Apa itu MediSift AI?](#2-solusi-apa-itu-medisift-ai)
 3. [Fitur-Fitur & Cara Kerja (Workflow)](#3-fitur-fitur--cara-kerja-workflow)
 4. [Kenapa Desain Web Dibuat Seperti Ini?](#4-kenapa-desain-web-dibuat-seperti-ini)
 5. [Cara Menjelaskan AI & Vibe Coding](#5-cara-menjelaskan-ai--vibe-coding)
@@ -52,25 +52,47 @@
 
 ---
 
-## 2. SOLUSI DAN KESESUAIAN TEMA
+## 2. SOLUSI & KESESUAIAN TEMA LOMBA: "KLASIFIKASI"
 
-### A. Solusi Nyata: Apa itu MediSift AI?
+### A. Solusi: Apa itu MediSift AI?
 **MediSift AI** adalah **"Lampu Peringatan Cerdas & Penerjemah Medis"** bagi masyarakat:
 * **Menerjemahkan Istilah Dokter:** Mengubah bahasa medis yang rumit menjadi bahasa Indonesia santai yang mudah dimengerti orang tua maupun remaja.
 * **Spidometer Risiko:** Ada indikator warna yang jelas: **Hijau (Aman)**, **Kuning (Waspada)**, sampai **Merah (Bahaya)**.
 * **Diagram Batas Dosis:** Ada diagram batang yang memperlihatkan: berapa dosis minimal, berapa anjuran wajar, berapa batas maksimal, dan di titik mana obat itu mulai jadi racun.
 * **Pendeteksi Tabrakan Obat:** Bisa memeriksa apakah dua atau tiga obat aman diminum bersamaan.
-* **Bukan Sekadar Chatbot:** Tidak membalas dengan paragraf panjang yang membingungkan, melainkan dengan kartu visual, angka takaran yang pasti, dan data farmakope yang bisa diverifikasi ulang.
 
-### B. Kesesuaian dengan Tema Lomba (Kenapa Aplikasi Ini Relevan & Pantas Juara?)
-Jika juri bertanya: *"Bagaimana aplikasi Anda menjawab tema lomba ini?"*, kaitkan dengan 3 pilar berikut:
+---
 
-1. **Pilar Etika & Keselamatan Pasien (Ethical AI & Patient Safety):**
-   * Kami tidak membuat AI yang "sok pintar" atau lancang menggantikan dokter. AI di MediSift AI bersifat transparan, membeberkan dasar logikanya, memagari batas racun dosis, dan memiliki tombol audit verifikasi ulang. Keselamatan nyawa pasien adalah hukum tertinggi.
-2. **Pilar Pemerataan Literasi Kesehatan (Health Literacy for Everyone):**
-   * Membuka akses pemahaman medis yang adil. Masyarakat berpendidikan tinggi maupun orang awam berhak tahu secara persis obat apa yang masuk ke dalam tubuh mereka tanpa takut dibingungkan oleh istilah kedokteran yang kaku.
-3. **Pilar Rekayasa Teknologi Aman & Tangguh (Reliable & Secure Engineering):**
-   * Solusi ini bukan sekadar prototipe rapuh di laptop: kunci API aman 100% di server (tidak bisa dibajak orang), memiliki cadangan 5 lapis jika kuota habis, dan biaya operasionalnya Rp 0 sehingga sangat mungkin diterapkan secara massal untuk masyarakat luas.
+### B. Kesesuaian dengan Tema Lomba: Mengapa Ini Proyek "Klasifikasi"?
+Jika juri bertanya: *"Tema lomba kita adalah KLASIFIKASI, di mana letak klasifikasi pada aplikasi ini?"*
+
+Ini jawaban telak dan sangat memukau:  
+MediSift AI bukan cuma melakukan 1 klasifikasi sederhana, melainkan **Sistem Klasifikasi Medis Bertingkat 5 Dimensi (Multi-Level Classification)**:
+
+1. **Klasifikasi Golongan Legalitas BPOM:**
+   * Mengklasifikasikan obat ke dalam 4 kategori regulasi resmi:
+     * 🟢 **Obat Bebas** (Bisa dibeli bebas tanpa resep di warung/apotek).
+     * 🔵 **Obat Bebas Terbatas** (Bisa dibeli bebas namun ada tanda peringatan khusus P No. 1 s.d. P No. 6).
+     * 🔴 **Obat Keras / Wajib Resep** (Lingkaran merah huruf K, wajib dengan resep dokter).
+     * 🟡 **Suplemen / Jamu Herbal** (Vitamin atau obat bahan alam).
+2. **Klasifikasi Tingkat Risiko Klinis (Risk Level):**
+   * Mengklasifikasikan tingkat keparahan risiko kesehatan ke dalam 4 tingkat visual:
+     * **Rendah (Low - Hijau/Teal):** Efek samping minimal untuk orang dewasa sehat.
+     * **Sedang (Moderate - Kuning):** Ada efek samping seperti kantuk atau perih lambung.
+     * **Tinggi (High - Oranye):** Punya risiko ke organ hati/ginjal atau kontraindikasi penyakit kronis.
+     * **Bahaya (Critical - Merah):** Sangat berbahaya jika diminum sembarangan tanpa resep.
+3. **Klasifikasi Keamanan Ibu Hamil (FDA Pregnancy Risk):**
+   * Mengklasifikasikan zat aktif ke kategori risiko janin: **Kategori A, B, C, D, hingga X (Dilarang Keras untuk ibu hamil)**.
+4. **Klasifikasi Benturan Campur Obat (Polypharmacy Clash Severity):**
+   * Saat pasien minum banyak obat, sistem mengklasifikasikan pasangan obat menjadi:
+     * `[SAFE]`: Aman diminum bersamaan.
+     * `[MEDIUM]`: Perlu jeda waktu minum 2–3 jam.
+     * `[CRITICAL CLASH]`: Benturan bahaya yang bisa melukai lambung atau merusak organ.
+5. **Klasifikasi Maksud Input Pengguna (Intent Router):**
+   * Memilah input pengguna di browser secara lokal (0 kuota): apakah input adalah **Nama Obat** (`IDENTIFY`) atau **Keluhan Sakit/Gejala** (`SUGGEST`).
+
+> 💡 **Kalimat Emas untuk Juri:**  
+> *"Bapak/Ibu Dewan Juri, proyek kami adalah implementasi nyata dari tema **Klasifikasi**. MediSift AI mengklasifikasikan data farmakologi secara komprehensif dalam 5 tingkatan: legalitas BPOM, tingkat risiko klinis, batas keamanan kehamilan, tingkat benturan antar-obat, hingga klasifikasi maksud keluhan pengguna."*
 
 ---
 

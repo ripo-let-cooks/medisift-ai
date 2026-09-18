@@ -50,11 +50,18 @@ MediSift AI **bukan sekadar chatbot**, melainkan mesin diagnostik edukatif yang:
 * Memetakan spektrum dosis aman secara visual (*Tolerance Dose Spectrum Chart*).
 * Menguji benturan kimiawi konsumsi multi-obat secara instan (*Polypharmacy Clash Matrix*).
 
-### B. Kesesuaian Tema Lomba
-Platform ini sangat selaras dengan pilar-pilar kompetisi teknologi modern:
-1. **AI Governance & Ethical AI:** Menjunjung tinggi transparansi, akuntabilitas, keselamatan pasien (*patient safety*), dan penolakan terhadap sistem AI tertutup (*anti-black-box*).
-2. **Healthcare Equality & Literacy:** Mendemokratisasi literasi kesehatan agar masyarakat dari berbagai latar belakang pendidikan dapat memahami obat yang mereka konsumsi.
-3. **Zero-Trust Engineering:** Membangun aplikasi berbasis web dengan standar keamanan data tingkat tinggi (kunci API terlindungi di serverless backend).
+### B. Kesesuaian Tema Lomba: "Klasifikasi"
+Platform ini merupakan implementasi tingkat lanjut dari tema **Klasifikasi Medis**, menghadirkan arsitektur **Multi-Level Clinical Classification (Sistem Klasifikasi 5 Dimensi)**:
+1. **Klasifikasi Legalitas BPOM (*Regulatory Classification*):** Mengklasifikasikan obat ke dalam 4 kelas hukum: *Obat Bebas (Hijau)*, *Obat Bebas Terbatas (Biru)*, *Obat Keras / Wajib Resep (Merah)*, dan *Suplemen / Herbal (Kuning)*.
+2. **Klasifikasi Risiko Klinis (*Clinical Risk Classification*):** Mengklasifikasikan tingkat keparahan risiko kesehatan ke dalam 4 zona: *Rendah (Teal)*, *Sedang (Kuning)*, *Tinggi (Oranye)*, dan *Kritis (Crimson)*.
+3. **Klasifikasi Keamanan Kehamilan (*FDA Pregnancy Category*):** Mengklasifikasikan dampak zat aktif terhadap janin (*Kategori A, B, C, D, X*).
+4. **Klasifikasi Benturan Polifarmasi (*Clash Severity Classification*):** Mengklasifikasikan interaksi pasangan multi-obat (*[SAFE]*, *[MEDIUM]*, *[CRITICAL CLASH]*).
+5. **Klasifikasi Maksud Pengguna (*Zero-Cost Intent Classification*):** Memilah input teks lokal di browser antara nama obat tunggal (`IDENTIFY`) atau keluhan gejala (`SUGGEST`).
+
+Selain itu, sistem selaras dengan pilar pendukung:
+* **AI Governance & Ethical AI:** Menjunjung transparansi logika (*anti-black-box*) dan audit klinis mandiri (*AI Self-Correction*).
+* **Healthcare Equality & Literacy:** Mendemokratisasi pemahaman medis untuk seluruh lapisan masyarakat.
+* **Zero-Trust Engineering:** Menjaga kerahasiaan kunci API di lingkungan serverless.
 
 ---
 
