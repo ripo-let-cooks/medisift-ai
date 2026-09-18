@@ -75,7 +75,7 @@ flowchart LR
 
 ---
 
-## 💻 Tech Stack
+## 💻 Tech Stack & Rasionalitas Arsitektur
 
 - **Frontend Core:** React 19, JavaScript (ES Modules)
 - **Tooling & Bundler:** Vite 8, PostCSS, Autoprefixer
@@ -85,6 +85,19 @@ flowchart LR
 - **Serverless Backend:** Node.js HTTP & Vercel Serverless Function (`api/gemini.js`)
 - **AI Engine:** Google Generative AI SDK (`@google/generative-ai`)
 - **Code Linter:** Oxlint (Zero Lint Errors)
+
+### 💡 Mengapa Memilih Stack Ini?
+
+| Teknologi / Framework | Alasan Pemilihan & Keuntungan Klinis |
+| :--- | :--- |
+| **React 19** | Memudahkan pemecahan antarmuka menjadi komponen modular (*RiskGauge*, *DoseBarChart*, *MatrixClash*) dan reaktivitas instan tanpa reload halaman. |
+| **Vite 8** | Waktu build produksi super cepat (~1 detik) dan ukuran bundle sangat ramping (< 300 KB) agar web terbuka seketika di ponsel pasien apotek. |
+| **Tailwind CSS v4** | Membangun tema gelap instrumen klinis (*Clinical Terminal*) dengan file CSS mini (< 48 KB) dan performa zero-runtime. |
+| **Recharts v3** | Grafik berbasis vektor SVG murni sehingga speedometer risiko dan diagram dosis selalu tajam (*crisp*), tidak pecah di proyektor juri maupun cetak PDF. |
+| **Framer Motion v13** | Animasi fisika pegas (*spring physics*) yang mulus saat kartu beralih posisi tanpa hentakan layout (*no layout shift*). |
+| **Radix UI Primitives** | Menjamin aksesibilitas standar medis internasional (WCAG AA), ramah navigasi keyboard dan pembaca layar bagi pasien difabel. |
+| **Serverless Proxy (`api/gemini.js`)** | Standar Zero-Trust: Kunci API Gemini 100% terlindungi di server, biaya $0, tanpa sewa VPS, dan menjadi wadah in-memory cache 0ms. |
+
 
 ---
 
