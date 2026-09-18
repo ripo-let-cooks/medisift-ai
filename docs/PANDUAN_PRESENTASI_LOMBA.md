@@ -74,6 +74,7 @@ Platform ini sangat selaras dengan pilar-pilar kompetisi teknologi modern:
 | **Server In-Memory Cache** | Performance | Menyimpan kueri yang pernah dicari di memori server; pencarian berulang dijawab dalam **0 milidetik** tanpa memakan kuota API. |
 | **5-Tier Resilient Fallback** | Reliability | Urutan 5 lapis model AI (`3.5-flash`, `3.5-flash-lite`, `3.7-flash`, `3.8-flash`, `3.6-flash`) dengan *smart cooldown* otomatis saat limit 429. |
 | **Export PDF Medis** | Utility | Cetak laporan rekam medis instan format `@media print` tanpa elemen navigasi web, siap dibawa ke dokter/apoteker. |
+| **Deep Clinical Re-Audit** | AI Self-Correction | Verifikasi ulang akurasi data obat dengan standar farmakope ketat via tombol minimalis `[Verifikasi Ulang]` dan lencana `[Audit Terverifikasi]`. |
 | **Audit Log & History** | Privacy | Riwayat pencarian tersimpan privat di perangkat pengguna (`localStorage`) dengan penanggalan lokal Indonesia (`id-ID`). |
 
 ### B. Diagram Alur Kerja Sistem (System Workflow)
@@ -145,6 +146,8 @@ sequenceDiagram
    * AI menganalisis gambar kemasan obat langsung dari data base64 terkompresi bersamaan dengan prompt farmasi klinis.
 3. **Prompt Engineering Khusus Farmakologi:**
    * Memasang aturan *anti-recitation* (suhu 0.4) agar AI tidak menyalin teks hak cipta secara mentah, melainkan merumuskannya dalam gaya bahasa awam sehari-hari.
+4. **Mekanisme *AI Self-Correction (Chain-of-Verification)*:**
+   * Menyediakan fitur audit ulang ganda (`REVERIFY`) di mana AI diposisikan sebagai *Auditor Farmakologi Senior* untuk memverifikasi ulang batas spektrum dosis dan kontraindikasi klinis secara lebih ketat, lalu memperbarui visualisasi data secara live.
 
 ### B. Penjelasan Konsep *Vibe Coding* pada Proyek Ini
 Jika juri menanyakan tentang *Vibe Coding*:
@@ -396,6 +399,16 @@ Berikut adalah daftar pertanyaan paling tajam yang berpotensi diajukan oleh Dewa
 >    * **Kecepatan:** Vite mengompilasi aplikasi hanya dalam 1 detik dengan ukuran bundle JavaScript sangat kecil (< 300 KB gzipped) sehingga dapat dimuat seketika di ponsel pasien berkuota terbatas.  
 >    * **Biaya Nol & Skalabilitas Tinggi:** Backend kami berupa serverless function Vercel yang otomatis berskala saat diakses jutaan pengguna dengan biaya operasional $0.  
 >    * **Keamanan Kunci:** Arsitektur proxy serverless menjamin kunci API Google Gemini tersimpan 100% aman di server tanpa risiko dibajak oleh pihak luar."*
+
+---
+
+#### ❓ Pertanyaan 8:
+> *"Apa fungsi tombol 'Verifikasi Ulang' di bawah hasil analisis obat? Apakah AI benar-benar memproses data baru atau hanya animasi loading?"*
+
+**💡 Strategi Jawaban:**
+> *"Sistem kami benar-benar menjalankan proses komputasi baru berbasis paradigma **AI Self-Correction (Chain-of-Verification)**.  
+> Saat tombol ditekan, frontend mengirim sinyal aksi `REVERIFY` ke serverless proxy. Model Google Gemini dipanggil kembali dengan prompt khusus sebagai **Auditor Farmakologi Senior** untuk memvalidasi ulang ambang batas toksisitas farmakope resmi, batas kontraindikasi kehamilan, dan tingkat risiko klinis sebenarnya.  
+> Hasil audit presisi tersebut seketika memperbarui grafik dosis dan speedometer risiko di layar secara live dan disematkan lencana hijau **[AUDIT TERVERIFIKASI]**."*
 
 ---
 

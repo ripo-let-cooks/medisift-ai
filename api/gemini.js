@@ -27,6 +27,9 @@ function getCacheKey(action, payload) {
   if (action === 'POLYPHARMACY') {
     return `POLYPHARMACY:${(payload.drugListString || '').toLowerCase().trim()}`;
   }
+  if (action === 'REVERIFY') {
+    return `REVERIFY:${(payload.text || '').toLowerCase().trim()}`;
+  }
   return `${action}:${JSON.stringify(payload)}`;
 }
 
@@ -177,6 +180,8 @@ const SCHEMAS = {
   }
 };
 
+SCHEMAS['REVERIFY'] = SCHEMAS['ANALYZE'];
+
 export default async function handler(req, res) {
   // CORS & Header Options
   if (typeof res.setHeader === 'function') {
@@ -205,8 +210,8 @@ export default async function handler(req, res) {
 
   const { action, payload, customApiKey } = body || {};
 
-  if (!action || !['ANALYZE', 'SUGGEST', 'POLYPHARMACY'].includes(action)) {
-    return sendJson(res, 400, { success: false, error: 'Aksi tidak valid (harus ANALYZE, SUGGEST, atau POLYPHARMACY)' });
+  if (!action || !['ANALYZE', 'SUGGEST', 'POLYPHARMACY', 'REVERIFY'].includes(action)) {
+    return sendJson(res, 400, { success: false, error: 'Aksi tidak valid (harus ANALYZE, SUGGEST, POLYPHARMACY, atau REVERIFY)' });
   }
 
   // 1. Cek Server Cache terlebih dahulu (Kueri yang sama tidak memakan kuota)
@@ -287,6 +292,16 @@ export default async function handler(req, res) {
           promptContent = [
             `Anda adalah pakar farmakologi. Pengguna memasukkan daftar obat berikut: "${listText}". Buat matriks interaksi silang (setiap kombinasi pasangan). Tentukan tingkat keparahan interaksinya. ATURAN PENTING: 1. Gunakan bahasa awam sehari-hari. 2. Jika tidak ada interaksi negatif, beri severity "Safe" dan tulis "Aman digunakan bersamaan". 3. JANGAN PERNAH menyalin teks mentah dari referensi mana pun (hindari RECITATION), formulasikan dengan gaya bahasa Anda sendiri. Kembalikan HANYA JSON valid sesuai skema.`
           ];
+        } else if (action === 'REVERIFY') {
+          const { text } = payload || {};
+          promptContent = [
+            `Anda adalah auditor farmakologi klinis senior. Lakukan AUDIT ULANG MENDALAM dan VERIFIKASI KETAT terhadap data obat: "${text || ''}".
+Periksa kembali secara teliti:
+1. Batas spektrum dosis toleransi standar (mg) vs ambang batas toksisitas menurut farmakope resmi.
+2. Kontraindikasi, peringatan kehamilan, dan peringatan aktivitas harian.
+3. Tingkat risiko klinis sebenarnya dan alasan farmakologisnya secara transparan.
+Pastikan data 100% presisi dan gunakan bahasa awam sehari-hari yang mudah dipahami (misal: tulis 'Diminum' bukan 'Oral', 'Obat Bebas' bukan 'OTC'). JANGAN menyalin teks mentah dari internet untuk menghindari filter plagiasi/recitation. Kembalikan HANYA JSON valid sesuai skema.`
+          ];
         }
 
         const result = await model.generateContent(promptContent);
@@ -306,7 +321,9 @@ export default async function handler(req, res) {
 
         return sendJson(res, 200, {
           success: true,
-          data: parsedData
+          data: parsedData,
+          isReverified: action === 'REVERIFY',
+          modelUsed: modelName
         });
 
       } catch (error) {

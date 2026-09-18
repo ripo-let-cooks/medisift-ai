@@ -41,6 +41,7 @@ Lebih dari **70% masyarakat Indonesia melakukan swamedikasi (pengobatan mandiri)
 | 💊 **Deteksi Polifarmasi (Multi-Drug Clash)** | Menganalisis konsumsi banyak obat sekaligus dan memetakan matriks interaksi silang (*[SAFE]*, *[MEDIUM]*, *[CRITICAL CLASH]*). |
 | ⚡ **Respon Kilat 0ms (In-Memory Cache)** | Kueri yang pernah dicari disimpan di server cache RAM dan disajikan dalam **0 milidetik** tanpa membakar kuota API. |
 | 🖨️ **Ekspor Laporan PDF Klinis** | Format cetak khusus (`@media print`) yang menghilangkan navigasi dan merapikan hasil diagnosa ke lembar PDF siap pakai. |
+| 🔄 **Verifikasi Ulang Klinis (Deep Re-Audit)** | Melakukan audit silang ganda (*AI Self-Correction*) terhadap batas toleransi farmakope resmi dengan tombol minimalis dan penyematan lencana terverifikasi. |
 | 🕒 **Audit Log & Riwayat Lokal** | Riwayat tersimpan privat di browser pengguna (localStorage) dengan penanggalan lokal Indonesia (`id-ID`). |
 
 ---

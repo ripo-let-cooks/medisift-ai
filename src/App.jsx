@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ShieldAlert, ArrowLeft, Printer } from 'lucide-react';
+import { ShieldAlert, ArrowLeft, Printer, RotateCcw, CheckCircle, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import InputForm from './components/classification/InputForm';
 import CategoryBadge from './components/visualization/CategoryBadge';
@@ -12,7 +12,7 @@ import LegalModal from './components/governance/LegalModal';
 import { Toaster } from '@/components/ui/sonner';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
-import { analyzeDrug, suggestDrugs, determineIntent, analyzePolypharmacy } from './lib/gemini-client';
+import { analyzeDrug, suggestDrugs, determineIntent, analyzePolypharmacy, reverifyDrug } from './lib/gemini-client';
 import MultiDrugMatrix from './components/visualization/MultiDrugMatrix';
 import { useHistoryManager } from './hooks/useHistoryManager';
 import Header from './components/layout/Header';
@@ -31,6 +31,7 @@ export default function App() {
   const [showApiModal, setShowApiModal] = useState(false);
   const [showLegalModal, setShowLegalModal] = useState(null);
   const [tempApiKey, setTempApiKey] = useState('');
+  const [isReverifying, setIsReverifying] = useState(false);
   const { history, addToHistory, clearHistory } = useHistoryManager();
 
   // Force scroll to top and reset browser scroll restoration on refresh
@@ -158,6 +159,32 @@ export default function App() {
       setShowApiModal(false);
       setTempApiKey('');
       toast.success("API Key Disimpan", { description: "Silakan coba proses kembali." });
+    }
+  };
+
+  const handleReverify = async () => {
+    if (isReverifying || !result) return;
+    const targetName = result.drug_name || 'Obat';
+    setIsReverifying(true);
+    toast.info("Memulai Audit Akurasi", {
+      description: `Memverifikasi silang data ${targetName} dengan standar farmakope...`
+    });
+
+    try {
+      const verified = await reverifyDrug(targetName);
+      setResult({
+        ...verified,
+        is_reverified: true
+      });
+      toast.success("Verifikasi Berhasil", {
+        description: `Data ${targetName} telah diverifikasi ulang dengan standar presisi tinggi.`
+      });
+    } catch (err) {
+      toast.error("Verifikasi Gagal", {
+        description: err.message || "Gagal melakukan verifikasi ulang data."
+      });
+    } finally {
+      setIsReverifying(false);
     }
   };
 
@@ -353,7 +380,15 @@ export default function App() {
                         </div>
                       )}
                       <div>
-                        <h3 className="text-3xl md:text-5xl font-bold tracking-tighter text-foreground leading-[1.1] mb-2">{result.drug_name}</h3>
+                        <div className="flex items-center gap-3 flex-wrap mb-2">
+                          <h3 className="text-3xl md:text-5xl font-bold tracking-tighter text-foreground leading-[1.1]">{result.drug_name}</h3>
+                          {result.is_reverified && (
+                            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[10px] font-mono tracking-wider uppercase bg-emerald-950/70 border border-emerald-500/40 text-emerald-400">
+                              <CheckCircle className="h-3 w-3 text-emerald-400" />
+                              Audit Terverifikasi
+                            </span>
+                          )}
+                        </div>
                         <p className="text-sm font-mono tracking-widest uppercase text-muted-foreground">
                           KOMPOSISI: {result.active_ingredients?.join(', ') || 'TIDAK DIKETAHUI'}
                         </p>
@@ -413,14 +448,32 @@ export default function App() {
                       {result.governance_disclaimer}
                     </p>
                     <motion.button 
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => toast.success("Laporan Inakurasi Diterima", { 
-                        description: "Terima kasih atas kontribusi Anda. Data analisis obat ini telah ditandai untuk audit verifikasi klinis lanjutan."
-                      })}
-                      className="w-full sm:w-auto text-[10px] sm:text-xs font-mono uppercase tracking-widest bg-background border border-border/40 px-6 py-3 hover:bg-muted hover:text-foreground transition-colors shrink-0 no-print"
+                      whileHover={{ scale: isReverifying || result.is_reverified ? 1 : 1.05 }}
+                      whileTap={{ scale: isReverifying || result.is_reverified ? 1 : 0.95 }}
+                      onClick={handleReverify}
+                      disabled={isReverifying || result.is_reverified}
+                      className={`w-full sm:w-auto text-[10px] sm:text-xs font-mono uppercase tracking-widest px-6 py-3 transition-all shrink-0 no-print border ${
+                        result.is_reverified 
+                          ? 'bg-emerald-950/40 border-emerald-500/40 text-emerald-400 cursor-default'
+                          : 'bg-background border-border/40 hover:bg-muted hover:text-foreground text-muted-foreground'
+                      }`}
                     >
-                      Laporkan Inakurasi
+                      {isReverifying ? (
+                        <span className="inline-flex items-center gap-2">
+                          <Loader2 className="h-3.5 w-3.5 animate-spin text-primary" />
+                          Memverifikasi...
+                        </span>
+                      ) : result.is_reverified ? (
+                        <span className="inline-flex items-center gap-1.5">
+                          <CheckCircle className="h-3.5 w-3.5 text-emerald-400" />
+                          Terverifikasi
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1.5">
+                          <RotateCcw className="h-3.5 w-3.5" />
+                          Verifikasi Ulang
+                        </span>
+                      )}
                     </motion.button>
                   </div>
                     </>

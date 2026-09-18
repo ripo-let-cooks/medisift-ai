@@ -64,6 +64,10 @@ export async function analyzePolypharmacy(drugListString) {
   return await dispatchApi('POLYPHARMACY', { drugListString });
 }
 
+export async function reverifyDrug(text) {
+  return await dispatchApi('REVERIFY', { text });
+}
+
 export async function determineIntent(text) {
   // Free-Tier Optimization: Rule-based Intent Router (Zero API Cost)
   if (!text) return { intent: "IDENTIFY" };

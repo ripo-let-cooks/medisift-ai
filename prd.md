@@ -123,6 +123,9 @@ flowchart TD
    - Kategori keselamatan kehamilan (Kategori A, B, C, D, X).
 5. **Reason Breakdown (Kotak Transparansi AI):**
    - Menyajikan uraian rasional medis di balik hasil klasifikasi lengkap dengan persentase skor keyakinan (*confidence score*).
+6. **Deep Clinical Re-Audit (Verifikasi Ulang Klinis):**
+   - Tombol minimalis di bawah lembar diagnosis (`[Verifikasi Ulang]`) yang memicu proses *AI Self-Correction (Chain-of-Verification)*.
+   - AI mengaudit ulang batas toleransi toksisitas farmakope secara ketat dan memperbarui data grafik di layar serta menyematkan lencana hijau `[Audit Terverifikasi]`.
 
 ### C. Pemindai Polifarmasi (Multi-Drug Pairwise Clash Scanner)
 1. **Pencarian Banyak Obat Sekaligus:**

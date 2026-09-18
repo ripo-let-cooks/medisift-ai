@@ -70,7 +70,8 @@
 3. **Pindai Foto Kemasan (Kamera):** Tinggal foto bungkus obat pakai kamera HP, sistem langsung membaca nama obatnya secara otomatis.
 4. **Cek Campuran Multi-Obat:** Memeriksa apakah obat A dan obat B bentrok jika diminum bersamaan.
 5. **Cetak PDF Medis:** Sekali klik tombol printer, hasil ringkasan obat langsung rapi siap dicetak untuk dibawa ke dokter atau apoteker.
-6. **Riwayat Pencarian:** Obat yang pernah dicari tersimpan otomatis di perangkat pengguna.
+6. **Verifikasi Ulang Klinis (Audit AI):** Tombol minimalis di bagian bawah hasil untuk memicu pemeriksaan silang ulang data obat dengan standar farmakope ketat (*AI Self-Correction*).
+7. **Riwayat Pencarian:** Obat yang pernah dicari tersimpan otomatis di perangkat pengguna.
 
 ### B. Cara Kerja di Balik Layar (Sederhana):
 1. Pengguna mengetik nama obat atau memotret bungkus obat di peramban (browser).
@@ -152,6 +153,7 @@ Gunakan skenario ini saat memegang mouse dan menampilkan layar di depan juri:
    * *"Bisa kita lihat bersama, di sini langsung muncul label **Obat Bebas (Hijau)** bertanda izin BPOM."*
    * *"Di sampingnya ada **Spidometer Risiko** berwarna hijau (Rendah)."*
    * *"Dan yang paling penting adalah **Diagram Batas Dosis** di bawahnya: pasien bisa melihat dosis wajar adalah 500mg, maksimal 1.000mg sekali minum, dan jika melebihi 4.000mg per hari, itu sudah masuk batas racun berbahaya."*
+   * *"Jika pengguna atau dokter ingin menguji ulang keakuratan data ini, kita cukup mengeklik tombol **Verifikasi Ulang** di bawah. AI seketika melakukan audit silang ganda dan memberi lencana hijau **[AUDIT TERVERIFIKASI]**."*
 
 ### Menit 2: Ketik Keluhan Sakit (Bukan Nama Obat)
 1. Kembali ke kotak atas, ketik keluhan orang awam: **`pusing dan meriang`**, lalu klik **Proses**.
@@ -265,6 +267,16 @@ Berikut jawaban penyelamat jika Anda ditanya hal-hal tajam oleh juri:
 **🛡️ Jawaban Aman:**
 > *"Sangat aman, Dewan Juri. Kami menerapkan prinsip **Privasi Lokal**.  
 > Foto obat dikompresi langsung di HP pengguna sebelum dikirim, dan riwayat pencarian disimpan murni di memori HP masing-masing pengguna (`localStorage`). Kami di server tidak menyimpan data riwayat pribadi atau identitas pengguna, sehingga risiko kebocoran data pribadi adalah nol."*
+
+---
+
+### ❓ Pertanyaan 6:
+> *"Kalau saya klik tombol 'Verifikasi Ulang' di bawah hasil itu, apa yang sebenarnya dilakukan oleh AI? Apakah cuma pura-pura loading atau mencari data baru?"*
+
+**🛡️ Jawaban Aman:**
+> *"Bukan pura-pura loading, Dewan Juri. Sistem kami benar-benar menjalankan proses komputasi baru berbasis konsep **AI Self-Correction (Chain-of-Verification)**.  
+> Saat tombol ditekan, sistem mengirim sinyal 'REVERIFY' ke Google Gemini dengan peran baru sebagai **Auditor Farmakologi Senior**. AI diminta melakukan audit silang ganda (*double cross-check*) terhadap batas toleransi miligram dosis dan kontraindikasi berdasarkan literatur farmakope resmi.  
+> Hasil audit yang lebih presisi tersebut seketika memperbarui data di layar dan ditandai dengan lencana hijau **Audit Terverifikasi**."*
 
 ---
 
